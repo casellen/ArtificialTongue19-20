@@ -1,0 +1,38 @@
+/* pseudo code for test bench
+ *  11/7/19
+ *  Claire Sellen
+ */
+ 
+ int sensors    // initialize misc sensors
+ 
+ void setup()
+ {
+ // set pins for solenoids/pumps
+ pinMode(...)
+ ...
+ }
+  
+/* helper functions:
+  * inflateTo(section, height)
+  * add air (inflate)
+  * remove air (deflate)
+  * inflateAll (inflates all sections)
+void inflateTo(section, height)   // takes in section of tongue, height to inflate it to
+ {
+  /* need sensor readings to:
+    * corelate with height
+    * i.e. pot value, encoder ticks
+   */
+  if (sensorReading < height - buffVal)
+    inflate(section);
+  elif (sensorReading > height + buffVal)
+    deflate(section);
+  else
+    null
+  }
+   
+  void loop()
+  {
+    if(button == HIGH)
+      inflateAll();
+  }
