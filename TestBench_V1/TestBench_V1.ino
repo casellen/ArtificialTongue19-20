@@ -64,7 +64,7 @@ void inflateSection(int section, int sec) {
    * Takes in section and time, inflates for that long
    */
    digitalWrite(section, HIGH);     // section on
-   delay(sec);                  // run for time
+   delay(sec*1000);                  // run for time
    digitalWrite(section, LOW);      // turn off
 }
 
@@ -75,7 +75,7 @@ void inflateAll(int sec) {
    digitalWrite(backSol, HIGH);
    digitalWrite(midSol, HIGH);
    digitalWrite(frontSol, HIGH);
-   delay(sec);
+   delay(sec*1000);
    digitalWrite(backSol, LOW);
    digitalWrite(midSol, LOW);
    digitalWrite(frontSol, LOW);
