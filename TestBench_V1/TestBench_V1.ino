@@ -83,7 +83,7 @@ void inflateAll(int sec) {
 
 // ******** MAIN LOOP *******
 void loop() {
-  lcdMain();      // Turn on LCD main menu
+  // lcdMain();      // Turn on LCD main menu
   
   frontBtn = digitalRead(btn1);     // Check if button 1 is pressed
   midBtn = digitalRead(btn2);       // Check if button 2 is pressed
@@ -93,25 +93,25 @@ void loop() {
   // Inflate Front if button 1 is pressed, inflate for 2 seconds
   if (frontBtn == HIGH)
   {
-    inflateSection(frontSol, 2);
+    inflateSection(frontSol, 5);
   }
 
   // inflate middle if button 2 is pressed, inflate for 2 seconds
   else if (midBtn == HIGH)
   {
-    inflateSection(midSol, 2);
+    inflateSection(midSol, 5);
   }
 
   //inflate back if button 3 is pressed, inflate for 2 seconds
   else if (backBtn == HIGH)
   {
-    inflateSection(backSol, 2);
+    inflateSection(backSol, 5);
   }
 
   // inflate all if button 4 is pressed
   else if (allBtn == HIGH)
   {
-    inflateAll(3);
+    inflateAll(5);
   }
 
 }
