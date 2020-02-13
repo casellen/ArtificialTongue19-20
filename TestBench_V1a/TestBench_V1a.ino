@@ -1,7 +1,5 @@
-/* Test Bench code for Artificial Tongue - V1
- *  THIS VERSION WORKS! MAKE A NEW BRANCH FOR ANY CHANGES!!
- *  Includes multiple inflation functions
- *  Buttons
+/* Test Bench code for Artificial Tongue - V1a
+ *  Basic timed inflation code to test seal on tongue
  *  Basic LCD display
  */
 // **** LIBRARIES TO INCLUDE ****
@@ -85,35 +83,8 @@ void inflateAll(int sec) {
 // ******** MAIN LOOP *******
 void loop() {
   //lcdMain();      // Turn on LCD main menu
+
+  inflateAll(5);
   
-  frontBtn = digitalRead(btn1);     // Check if button 1 is pressed
-  midBtn = digitalRead(btn2);       // Check if button 2 is pressed
-  backBtn = digitalRead(btn3);      // Check if button 3 is pressed
-  allBtn = digitalRead(btn4);       // Check if button 4 is pressed
-  
-  // Inflate Front if button 1 is pressed, inflate for 2 seconds
-  if (frontBtn == HIGH)
-  {
-    //lcdMain();
-    inflateSection(frontSol, 5);
-  }
-
-  // inflate middle if button 2 is pressed, inflate for 2 seconds
-  else if (midBtn == HIGH)
-  {
-    inflateSection(midSol, 5);
-  }
-
-  //inflate back if button 3 is pressed, inflate for 2 seconds
-  else if (backBtn == HIGH)
-  {
-    inflateSection(backSol, 5);
-  }
-
-  // inflate all if button 4 is pressed
-  else if (allBtn == HIGH)
-  {
-    inflateAll(5);
-  }
 
 }
