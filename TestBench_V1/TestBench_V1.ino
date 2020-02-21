@@ -1,8 +1,8 @@
-/* Test Bench code for Artificial Tongue - V1
- *  THIS VERSION WORKS! MAKE A NEW BRANCH FOR ANY CHANGES!!
+/* Test Bench code for Artificial Tongue - V1 (branch 3)
  *  Includes multiple inflation functions
  *  Buttons
  *  Basic LCD display
+ *  Testing pressure sensors/Calibration
  */
 // **** LIBRARIES TO INCLUDE ****
 #include <Wire.h>
@@ -10,6 +10,7 @@
 #include <LiquidCrystal_I2C.h>
 
 // ****** CONSTANTS AND VARIABLES ******
+
 //    PINOUTS
 const int backSol = 10;     //Back Section D10
 const int midSol = 11;      // Middle section D11
@@ -18,9 +19,14 @@ const int btn1 = 2;         // Button 1, D2
 const int btn2 = 3;         // Button 2, D3
 const int btn3 = 4;         // Button 3, D4
 const int btn4 = 5;         // Button 4, D5
+const int pres_1 = 5;       // pressure sensor 1 (white wire), A5
+const int pres_2 = 4;       // pressure sensor 2 (yellow wire), A4
+const int pres_3 = 3;       // pressure sensor 1 (black wire), A3
 
 LiquidCrystal_I2C  lcd(0x27,2,1,0,4,5,6,7); // 0x27 is the I2C bus address for an unmodified backpack
 
+// OTHER MISC CONSTANTS
+int Pmin = 0;   // minimum pressure reading on sensor
 //    VARIABLES FOR READINGS
 int frontBtn = 0;     // Button 1 - inflate front
 int midBtn = 0;       // Button 2 - inflate mid
@@ -43,6 +49,12 @@ void setup() {
   lcd.begin (20,4);          // for 20 x 4 LCD module
   lcd.setBacklightPin(3,POSITIVE);
   lcd.setBacklight(HIGH);
+
+  // set up pressure sensors
+  pinMode(pres_1, INPUT);     // Pressure sensor 1
+  pinMode(pres_2, INPUT);     // Pressure sensor 2
+  pinMode(pres_3, INPUT);     // Pressure sensor 3
+  
 }
 // ****** HELPER FUNCTIONS ******
 void lcdMain() {
@@ -82,6 +94,22 @@ void inflateAll(int sec) {
    digitalWrite(frontSol, LOW);
 }
 
+void readPressure(int pin) {
+  /*
+   * takes in pressure sensor pin, 
+   * returns output pressure 
+   * modified from soft robotics toolkit
+   */
+   sensorValue = analogRead(pin);
+   
+   // digital value of pressure sensor voltage
+   voltage_mv = (sensorValue * reference_voltage_mv) / ADCFULLSCALE;    // use ADC to convert analog to digital
+
+   // pressure sensor voltage in mV
+   voltage_v = voltage_mv / 1000;     // convert mv to v
+
+   output_pressure = (((voltage_v - (0.10 * (reference_voltage_mv * 1000))) * 30 / (0.8 * reference_voltage_mv/1000))) + Pmin;
+}
 // ******** MAIN LOOP *******
 void loop() {
   //lcdMain();      // Turn on LCD main menu
