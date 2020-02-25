@@ -1,5 +1,5 @@
 /* Test Bench code for Artificial Tongue - V1 (branch 3)
- *  Includes multiple inflation functions
+ *  Includes multiple inflation functions - measure this stuff
  *  Buttons
  *  Basic LCD display
  *  Testing pressure sensors/Calibration
