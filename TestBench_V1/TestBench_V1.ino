@@ -105,10 +105,10 @@ float readPressure(int pin) {
    int sensorValue = analogRead(pin);       // reads sensor value
    
    // convert sensor value to voltage
-   float voltage = sensorValue * (5.0 / 1023.0);
+   float voltage = sensorValue * (5.0f / 1023.0f);
 
    // convert volts to PSI
-   float pressure_Value = ((voltage - (0.10 * 5.0)) / (0.80 * 5.0)) * 30;
+   float pressure_Value = ((voltage - (0.10f * 5.0f)) / (0.80f * 5.0f)) * 30.0f;
    
    // return PSI value
    return pressure_Value;

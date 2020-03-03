@@ -1,6 +1,6 @@
 /* Test Bench code for Artificial Tongue - V1a
  *  Basic timed inflation code to test seal on tongue/misc things
- *  Loop reads pressure sensor 1 and prints value to LCD!
+ *  Loop reads pressure sensor 1 and prints value to LCD
  */
 // **** LIBRARIES TO INCLUDE ****
 #include <Wire.h>
@@ -103,13 +103,13 @@ float readPressure(int pin) {
    int sensorValue = analogRead(pin);       // reads sensor value
    
    // convert sensor value to voltage
-   float voltage = sensorValue * (5.0 / 1023.0);
+   float voltage = (float)sensorValue * (5.0f / 1023.0f);
 
    // convert volts to PSI
-   float pressure_Value = ((voltage - (0.10 * 5.0)) / (0.80 * 5.0)) * 30;
+   //float pressure_Value = ((voltage - (0.10f * 5.0f)) / (0.80f * 5.0f)) * 30.0f;
    
    // return PSI value
-   return pressure_Value;
+   return sensorValue;
    }
 
 // ******** MAIN LOOP *******
@@ -119,6 +119,8 @@ void loop() {
   inflateAll(2);
   float pressure_1 = readPressure(pres_1);
   lcd.print(pressure_1);
+  delay(500);
+  lcd.clear();
   
   
 
