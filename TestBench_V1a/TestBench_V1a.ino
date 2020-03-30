@@ -82,7 +82,7 @@ void inflateSection(int section, int sec) {
    digitalWrite(section, LOW);      // turn off
 }
 
-float inflateAll(int sec) {
+void inflateAll(int sec) {
   /*
    * takes in time and Pin Val, inflates all sections for that long, then turns off solenoids
    */
@@ -122,7 +122,7 @@ float readPressure(int pin) {
 // ******** MAIN LOOP *******
 void loop() {
   //lcdMain();      // Turn on LCD main menu
-  float pressure_1 = inflateAll(2);
+  inflateAll(2);
   lcd.println(cur_pres[0]);
   lcd.println(cur_pres[1]);
   lcd.println(cur_pres[2]);
