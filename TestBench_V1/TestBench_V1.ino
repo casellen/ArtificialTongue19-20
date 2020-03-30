@@ -3,6 +3,7 @@
  *  Buttons
  *  Basic LCD display
  *  Testing pressure sensors/Calibration
+ *  MAKE SURE TO UPDATE THIS WITH THE PRESSURE CODE FROM 1a!!
  */
 // **** LIBRARIES TO INCLUDE ****
 #include <Wire.h>
@@ -19,9 +20,9 @@ const int btn1 = 2;         // Button 1, D2
 const int btn2 = 3;         // Button 2, D3
 const int btn3 = 4;         // Button 3, D4
 const int btn4 = 5;         // Button 4, D5
-const int pres_1 = 5;       // pressure sensor 1 (white wire), A3
-const int pres_2 = 4;       // pressure sensor 2 (yellow wire), A2
-const int pres_3 = 3;       // pressure sensor 3 (black wire), A1
+const int pres_1 = 5;       // pressure sensor 1 (white wire), A5
+const int pres_2 = 4;       // pressure sensor 2 (yellow wire), A4
+const int pres_3 = 3;       // pressure sensor 3 (black wire), A3
 
 LiquidCrystal_I2C  lcd(0x27,2,1,0,4,5,6,7); // 0x27 is the I2C bus address for an unmodified backpack
 
