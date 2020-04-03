@@ -80,13 +80,22 @@ void inflateSection(int section, int sec) {
   /*
    * Takes in section and time, inflates for that long
    */
-   digitalWrite(section, HIGH);     // section on
-   delay(sec*1000);                  // run for time
-   cur_pres[0] = readPressure(pres_1);    // Read out pressure sensor WHILE inflating! - Sensor 1
-   cur_pres[1] = readPressure(pres_2);    // Read out pressure senor 2
-   cur_pres[2] = readPressure(pres_3);    // Read out pressure sensor 3
-   delay(250);
-   digitalWrite(section, LOW);      // turn off
+   lcd.clear();   // clear lcd at beginning
+   for (int i = 0; i <= 2*sec; i++) {
+     //lcd.clear();   // clear lcd at start of each iteration
+     digitalWrite(section, HIGH);
+     delay(500);    // inflate for 0.5 sec
+     cur_pres[0] = readPressure(pres_1);    // Read out pressure sensor WHILE inflating! - Sensor 1
+     cur_pres[1] = readPressure(pres_2);    // Read out pressure senor 2
+     cur_pres[2] = readPressure(pres_3);    // Read out pressure sensor 3
+     delay(100);    // give time to read pressure
+     digitalWrite(section, LOW);  // turn off pump
+     lcd.print(cur_pres[0]);  // print pressure readouts
+     lcd.println(cur_pres[1]);
+     lcd.println(cur_pres[2]);
+     delay(500);
+     lcd.clear();
+   }  //for loop
    //return cur_pres;   // Global array, no need to return it 
 }
 
@@ -94,20 +103,30 @@ void inflateAll(int sec) {
   /*
    * takes in time and Pin Val, inflates all sections for that long, then turns off solenoids
    */
+   lcd.clear();   // clear lcd at beginning
+   for (int i = 0; i <= 2*sec; i++) {
+     //lcd.clear();   // clear lcd at start of each iteration
+     digitalWrite(backSol, HIGH);
+     digitalWrite(midSol, HIGH);
+     digitalWrite(frontSol, HIGH);
+     delay(500);    // inflate for 0.5 sec
+     cur_pres[0] = readPressure(pres_1);    // Read out pressure sensor WHILE inflating! - Sensor 1
+     cur_pres[1] = readPressure(pres_2);    // Read out pressure senor 2
+     cur_pres[2] = readPressure(pres_3);    // Read out pressure sensor 3
+     delay(100);    // give time to read pressure
+     digitalWrite(backSol, LOW);  // turn off pump
+     digitalWrite(midSol, LOW);
+     digitalWrite(frontSol, LOW);
+     lcd.print(cur_pres[0]);  // print pressure readouts
+     lcd.println(cur_pres[1]);
+     lcd.println(cur_pres[2]);
+     delay(500);
+     lcd.clear();
+   }  //for loop
+
    
-   digitalWrite(backSol, HIGH);
-   digitalWrite(midSol, HIGH);
-   digitalWrite(frontSol, HIGH);
-   delay(sec*1000);
-   cur_pres[0] = readPressure(pres_1);    // Read out pressure sensor WHILE inflating! - Sensor 1
-   cur_pres[1] = readPressure(pres_2);    // Read out pressure senor 2
-   cur_pres[2] = readPressure(pres_3);    // Read out pressure sensor 3
-   delay(250);
-   digitalWrite(backSol, LOW);
-   digitalWrite(midSol, LOW);
-   digitalWrite(frontSol, LOW);
    //return cur_pres;   //This is a global variable so it shouldn't need to return it. If we do return it, change the function to void
-}
+} // inflate all loop
 
 float readPressure(int pin) {
   /*
@@ -129,7 +148,7 @@ float readPressure(int pin) {
    
 // ******** MAIN LOOP *******
 void loop() {
-  //lcdMain();      // Turn on LCD main menu
+  lcdMain();      // Turn on LCD main menu
   
   frontBtn = digitalRead(btn1);     // Check if button 1 is pressed
   midBtn = digitalRead(btn2);       // Check if button 2 is pressed
@@ -139,44 +158,40 @@ void loop() {
   // Inflate Front if button 1 is pressed, inflate for 2 seconds
   if (frontBtn == HIGH)
   {
-    inflateSection(frontSol, 5);
-    lcd.println(cur_pres[0]);
-    lcd.println(cur_pres[1]);
-    lcd.println(cur_pres[2]);
+    inflateSection(frontSol, 3);
     delay(500);
     lcd.clear();
+    lcd.setCursor (0,1);          // go to start of 2nd line
+    lcd.print("Inflated front");
   }
 
   // inflate middle if button 2 is pressed, inflate for 2 seconds
   else if (midBtn == HIGH)
   {
-    inflateSection(midSol, 5);
-    lcd.println(cur_pres[0]);
-    lcd.println(cur_pres[1]);
-    lcd.println(cur_pres[2]);
+    inflateSection(midSol, 3);
     delay(500);
     lcd.clear();
+    lcd.setCursor (0,1);          // go to start of 2nd line
+    lcd.print("Inflated mid");
   }
 
   //inflate back if button 3 is pressed, inflate for 2 seconds
   else if (backBtn == HIGH)
   {
-    inflateSection(backSol, 5);
-    lcd.println(cur_pres[0]);
-    lcd.println(cur_pres[1]);
-    lcd.println(cur_pres[2]);
+    inflateSection(backSol, 3);
     delay(500);
     lcd.clear();
+    lcd.setCursor (0,1);          // go to start of 2nd line
+    lcd.print("inflated back");
   }
 
   // inflate all if button 4 is pressed
   else if (allBtn == HIGH)
   {
-    inflateAll(5);
-    lcd.println(cur_pres[0]);
-    lcd.println(cur_pres[1]);
-    lcd.println(cur_pres[2]);
+    inflateAll(3);
     delay(500);
     lcd.clear();
+    lcd.setCursor (0,1);          // go to start of 2nd line
+    lcd.println("inflated all");
   }
 } // end bracked for main loop
